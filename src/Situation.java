@@ -1,3 +1,5 @@
+import Buttons.BinOpButton;
+
 public class Situation {
     State state = State.Input1;
     JLabel display;
