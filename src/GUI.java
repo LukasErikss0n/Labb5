@@ -18,10 +18,9 @@ public class GUI extends JFrame {
     public GUI(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        var display = this.createDisplay();
-        var btnPanel = this.createButtonPanel();
+        JLabel display = this.createDisplay();
         this.situation = new Situation(display);
-
+        JPanel btnPanel = this.createButtonPanel();
         canvas = new JPanel(new BorderLayout());
         canvas.add(display, BorderLayout.PAGE_START);
         canvas.add(btnPanel, BorderLayout.CENTER);
@@ -34,15 +33,14 @@ public class GUI extends JFrame {
     }
 
     private JLabel createDisplay() {
-        var display = new JLabel("DISPLAY");
+        JLabel display = new JLabel("", JLabel.RIGHT);
         display.setPreferredSize(new Dimension(300, 40));
         return display;
     }
 
     private JPanel createButtonPanel() {
-        var btnPanel = new JPanel(new GridLayout(4, 4));
-
-        for (var row: GUI.btnSymbols) {
+        JPanel btnPanel = new JPanel(new GridLayout(4, 4));
+        for (String[] row: GUI.btnSymbols) {
             for (var sym: row) {
                 switch (sym) {
                     case ("C"):

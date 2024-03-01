@@ -23,6 +23,7 @@ public class BinOpButton extends CalculatorButton {
             case OpReady:
                 this.situation.binaryOperator = this;
                 this.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                this.setBackground(Color.LIGHT_GRAY);
                 break;
                 
             default:
@@ -30,8 +31,5 @@ public class BinOpButton extends CalculatorButton {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-    }
 }

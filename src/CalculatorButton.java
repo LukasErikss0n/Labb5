@@ -11,7 +11,7 @@ public abstract class CalculatorButton extends JButton implements ActionListener
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(50, 50));
         this.situation = situation;
-        addActionListener(this);
+        this.addActionListener(this);
     }
 
 
