@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class Situation extends JLabel {
+public class Situation {
     State state = State.Input1;
     JLabel display;
     BinOpButton binaryOperator;

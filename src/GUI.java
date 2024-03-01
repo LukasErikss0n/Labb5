@@ -1,78 +1,77 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.PriorityQueue;
 import java.util.function.IntBinaryOperator;
 
 public class GUI extends JFrame {
-
     private JPanel canvas;
+    private Situation situation;
+
+    static private String[][] btnSymbols = {
+            {"7", "8", "9", "/"},
+            {"4", "5", "6", "*"},
+            {"1", "2", "3", "-"},
+            {"0", "=", "C", "+"},
+    };
 
     public GUI(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        canvas = new JPanel(new GridBagLayout());
+        var display = this.createDisplay();
+        var btnPanel = this.createButtonPanel();
+        this.situation = new Situation(display);
 
-        var c = new GridBagConstraints();
+        canvas = new JPanel(new BorderLayout());
+        canvas.add(display, BorderLayout.PAGE_START);
+        canvas.add(btnPanel, BorderLayout.CENTER);
 
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = 5;
-        c.weighty = 1;
-        canvas.add(new JLabel("DISPLAY"), c);
-
-
-        canvas.setBackground(Color.GRAY);
-
-        var defaultSituation = new Situation(new JLabel()) ;
-
-        /*
-            7 8 9 /
-            4 5 6 *
-            1 2 3 -
-            0 = C +
-        */
-
-        canvas.add(new DigitButton("7", defaultSituation));
-        canvas.add(new DigitButton("8", defaultSituation));
-        canvas.add(new DigitButton("9", defaultSituation));
-        canvas.add(new BinOpButton("/", defaultSituation, new IntBinaryOperator() {
-            @Override
-            public int applyAsInt(int left, int right) {
-                return 0;
-            }
-        }));
-
-        canvas.add(new DigitButton("4", defaultSituation));
-        canvas.add(new DigitButton("5", defaultSituation));
-        canvas.add(new DigitButton("6", defaultSituation));
-        canvas.add(new BinOpButton("*", defaultSituation, new IntBinaryOperator() {
-            @Override
-            public int applyAsInt(int left, int right) {
-                return 0;
-            }
-        }));
-
-        canvas.add(new DigitButton("1", defaultSituation));
-        canvas.add(new DigitButton("2", defaultSituation));
-        canvas.add(new DigitButton("3", defaultSituation));
-        canvas.add(new DigitButton("-", defaultSituation));
-
-        canvas.add(new DigitButton("0", defaultSituation));
-        canvas.add(new EqualsButton("=", defaultSituation));
-        canvas.add(new CancelButton("C", defaultSituation));
-        canvas.add(new BinOpButton("+", defaultSituation, new IntBinaryOperator() {
-            @Override
-            public int applyAsInt(int left, int right) {
-                return 0;
-            }
-        }));
-
-        canvas.setPreferredSize(new Dimension(500, 500));
-        getContentPane().add(canvas);
+        this.getContentPane().add(canvas);
 
         pack();
         setVisible(true);
+
     }
 
+    private JLabel createDisplay() {
+        var display = new JLabel("DISPLAY");
+        display.setPreferredSize(new Dimension(300, 40));
+        return display;
+    }
 
+    private JPanel createButtonPanel() {
+        var btnPanel = new JPanel(new GridLayout(4, 4));
+
+        for (var row: GUI.btnSymbols) {
+            for (var sym: row) {
+                switch (sym) {
+                    case ("C"):
+                        btnPanel.add(new CancelButton("C", this.situation));
+                        break;
+
+                    case ("="):
+                        btnPanel.add(new EqualsButton("=", this.situation));
+                        break;
+
+                    case ("/"): case ("*"):
+                    case ("-"): case ("+"):
+                        btnPanel.add(new BinOpButton(sym, this.situation, new IntBinaryOperator() {
+                            @Override
+                            public int applyAsInt(int left, int right) {
+                                return 0;
+                            }
+                        }));
+                        break;
+
+                    case("0"): case ("1"): case ("2"): case ("3"):
+                    case ("4"): case ("5"): case ("6"):
+                    case ("7"): case ("8"): case ("9"):
+                        btnPanel.add(new DigitButton(sym, this.situation));
+                        break;
+                }
+            }
+        }
+
+        return btnPanel;
+    }
 }

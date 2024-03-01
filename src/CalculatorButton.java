@@ -5,14 +5,15 @@ import java.awt.event.ActionListener;
 
 public abstract class CalculatorButton extends JButton implements ActionListener {
 
-    private Situation situation;
+    protected Situation situation;
     public CalculatorButton(String symbol,  Situation situation){
         super(symbol);
         this.setBackground(Color.WHITE);
-        this.setSize(50, 50);
+        this.setPreferredSize(new Dimension(50, 50));
         this.situation = situation;
         addActionListener(this);
     }
+
 
     public abstract void transition();
 

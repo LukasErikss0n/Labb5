@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.function.IntBinaryOperator;
 
@@ -11,6 +13,21 @@ public class BinOpButton extends CalculatorButton {
 
     @Override
     public void transition() {
+        switch (this.situation.state) {
+            case Input1: case HasResult:
+                this.situation.leftOperand = Integer.parseInt(this.situation.display.getText());
+                this.situation.binaryOperator = this;
+                this.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                break;
+
+            case OpReady:
+                this.situation.binaryOperator = this;
+                this.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                break;
+                
+            default:
+                break;
+        }
     }
 
     @Override
