@@ -1,5 +1,10 @@
+/**
+ * @author Lukas Eriksson
+ * @author Vincent Gustafsson
+ */
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.lang.invoke.VarHandle;
 
 public class CancelButton extends CalculatorButton{
     public CancelButton(String symbol, Situation situation) {
@@ -9,9 +14,12 @@ public class CancelButton extends CalculatorButton{
     @Override
     public void transition() {
         // The "C" transitions always goes back to state "Input1".
+        //Clears the panel
         this.situation.display.setText("0");
-        this.situation.binaryOperator.setBorder(UIManager.getBorder("Button.border"));
 
+        if (this.situation.binaryOperator != null)
+            CalculatorButton.resetBtnBorder(this.situation.binaryOperator);
+        //changes state
         this.situation.state = State.Input1;
     }
 

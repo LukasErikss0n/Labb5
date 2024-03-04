@@ -1,3 +1,7 @@
+/**
+ * @author Lukas Eriksson
+ * @author Vincent Gustafsson
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,16 +24,17 @@ public class BinOpButton extends CalculatorButton {
                 this.situation.leftOperand = Integer.parseInt(this.situation.display.getText());
 
                 this.situation.binaryOperator = this;
-                this.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                CalculatorButton.highlightBtnBorder(this);
                 this.situation.state = State.OpReady;
                 break;
 
             case OpReady:
-                this.situation.binaryOperator.setBorder(UIManager.getBorder("Button.border"));
-                this.situation.binaryOperator = this;
-                this.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                CalculatorButton.resetBtnBorder(this.situation.binaryOperator);
 
-                this.situation.state = State.Input2;
+                this.situation.binaryOperator = this;
+                CalculatorButton.highlightBtnBorder(this);
+
+                this.situation.state = State.OpReady;
                 break;
 
             case Input2:
