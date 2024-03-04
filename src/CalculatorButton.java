@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public abstract class CalculatorButton extends JButton implements ActionListener {
 
     protected Situation situation;
+    protected String symbol;
     public CalculatorButton(String symbol,  Situation situation){
         super(symbol);
         this.setBackground(Color.WHITE);

@@ -19,8 +19,10 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel display = this.createDisplay();
+
         this.situation = new Situation(display);
         JPanel btnPanel = this.createButtonPanel();
+
         canvas = new JPanel(new BorderLayout());
         canvas.add(display, BorderLayout.PAGE_START);
         canvas.add(btnPanel, BorderLayout.CENTER);
@@ -53,12 +55,15 @@ public class GUI extends JFrame {
 
                     case ("/"): case ("*"):
                     case ("-"): case ("+"):
-                        btnPanel.add(new BinOpButton(sym, this.situation, new IntBinaryOperator() {
-                            @Override
-                            public int applyAsInt(int left, int right) {
-                                return 0;
-                            }
-                        }));
+                        IntBinaryOperator operation = switch (sym) {
+                            case "*" -> (l, r) -> l * r;
+                            case "/" -> (l, r) -> l / r;
+                            case "+" -> (l, r) -> l + r;
+                            case "-" -> (l, r) -> l - r;
+                            default -> throw new IllegalStateException("Unexpected value: " + sym);
+                        };
+
+                        btnPanel.add(new BinOpButton(sym, this.situation, operation));
                         break;
 
                     case("0"): case ("1"): case ("2"): case ("3"):
